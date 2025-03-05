@@ -22,3 +22,10 @@ Vestaboard+, but with another +
 ## Nerd stuff
 - git branch convention: `<initials>/<frontend/backend/(none)>/<branch name>`
 - git commit convention: `<feat/fix/chore>: <description>`
+- dev flow: 
+    - `git checkout -b tn/update-readme`
+    - do stuff
+    - `git add . && git commit -m "chore: update readme"`
+    - `git checkout main && git pull origin main`
+    - `git merge tn/update-readme`
+    - `git push origin main`

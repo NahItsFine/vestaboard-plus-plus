@@ -11,9 +11,12 @@ Vestaboard+, but with another +
 - [Vestaboard dev docs](https://docs.vestaboard.com/docs/local-api/introduction/?_gl=1*tzsb1s*_gcl_au*MjA0NDc4OTkwLjE3NDAyNDYwNjM.*_ga*NTkzMjIyNTI1LjE3NDAyNDYwNjM.*_ga_JE1QENZVTH*MTc0MTE0NDAyNi4xMC4xLjE3NDExNDQ0OTUuMjcuMC43MDQ5NjM5MjQ.&_ga=2.32622909.284988025.1741060193-593222525.1740246063)
 
 ### Tech stack
-- React
-- Django
-- SQLite
+- React (for frontend)
+- Django (for backend server)
+  - Celery Beat (for async job scheduling)
+- SQLite (for simple DB)
+- Celery (for async workers)
+- Redis (for async job broker)
 
 ### POV: Product manager
 - settings

@@ -11,7 +11,7 @@ Vestaboard+, but with another +
 - [Vestaboard dev docs](https://docs.vestaboard.com/docs/local-api/introduction/?_gl=1*tzsb1s*_gcl_au*MjA0NDc4OTkwLjE3NDAyNDYwNjM.*_ga*NTkzMjIyNTI1LjE3NDAyNDYwNjM.*_ga_JE1QENZVTH*MTc0MTE0NDAyNi4xMC4xLjE3NDExNDQ0OTUuMjcuMC43MDQ5NjM5MjQ.&_ga=2.32622909.284988025.1741060193-593222525.1740246063)
 
 ### Tech stack
-- React (for frontend)
+- React + TypeScript + Vite (for frontend)
 - Backend repo: [dynamic-display-backend](https://github.com/NahItsFine/dynamic-display-backend)
 - Django (for backend server)
   - Celery Beat (for async job scheduling)
@@ -44,5 +44,7 @@ Vestaboard+, but with another +
     - `git checkout main && git pull origin main`
     - `git merge tn/update-readme`
     - *`git push origin main`
-- Local testing
-  - TBD
+- Getting Started
+  - Update dependencies: `npm install`
+  - Run locally: `npm run dev`
+  - Run within the server: `npm run dev --host`

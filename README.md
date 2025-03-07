@@ -12,13 +12,14 @@ Vestaboard+, but with another +
 
 ### Tech stack
 - React (for frontend)
+- Backend repo: [dynamic-display-backend](https://github.com/NahItsFine/dynamic-display-backend)
 - Django (for backend server)
   - Celery Beat (for async job scheduling)
 - SQLite (for simple DB)
 - Celery (for async workers)
 - Redis (for async job broker)
 
-### POV: Product manager
+### Features
 - settings
   - quiet hours
 - sync channels
@@ -32,17 +33,15 @@ Vestaboard+, but with another +
   - random facts
   - stocks
 
-### POV: Engineer
-- this one repo runs both FE and BE
-- eventually export to docker or something
-
 ## Nerd stuff
-- git branch convention: `<initials>/<frontend/backend/(none)>/<branch name>`
-- git commit convention: `<feat/fix/chore>: <description>`
-- dev flow (* denotes if no feature branch): 
-  - `git checkout -b tn/update-readme`
-  - *do stuff
-  - *`git add . && git commit -m "chore: update readme"`
-  - `git checkout main && git pull origin main`
-  - `git merge tn/update-readme`
-  - *`git push origin main`
+- Git
+  - git branch convention: `<initials>/<branch name>`
+  - git commit convention: `<feat/fix/chore>: <description>`
+  - dev flow (* denotes if no feature branch): 
+    - `git checkout -b tn/update-readme`
+    - *do stuff
+    - *`git add . && git commit -m "chore: update readme"`
+    - `git checkout main && git pull origin main`
+    - `git merge tn/update-readme`
+    - *`git push origin main`
+- Local testing

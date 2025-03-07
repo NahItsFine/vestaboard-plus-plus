@@ -1,0 +1,1 @@
+// template for channel content component

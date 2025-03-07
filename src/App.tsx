@@ -1,34 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/file.svg'
-import viteLogo from '/file.svg'
-import './App.css'
+import { Box, createTheme, ThemeProvider } from '@mui/material';
+import { useState } from 'react';
+import './App.css';
+import React from 'react';
+import Nav from './components/nav';
+import Header from './components/header';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const ref = React.useRef<HTMLDivElement>(null);
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
+
+  const [currentTab, setCurrentTab] = useState('sync');
+
+  React.useEffect(() => {
+    (ref.current as HTMLDivElement).ownerDocument.body.scrollTop = 0;
+  }, [currentTab]);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Box className='roboto-condensed' ref={ref}>
+      <ThemeProvider theme={darkTheme}>
+        <Header />
+        {/* content */}
+        <Nav currentTab={currentTab} setCurrentTab={setCurrentTab} />
+      </ThemeProvider>
+    </Box>
   )
 }
 

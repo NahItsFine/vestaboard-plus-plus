@@ -4,6 +4,8 @@ import './App.css';
 import React from 'react';
 import Nav from './components/nav';
 import Header from './components/header';
+import { Tabs, TabsType } from './constants';
+import ContentSwitcher from './components/content-switcher';
 
 function App() {
   const ref = React.useRef<HTMLDivElement>(null);
@@ -13,7 +15,7 @@ function App() {
     },
   });
 
-  const [currentTab, setCurrentTab] = useState('sync');
+  const [currentTab, setCurrentTab] = useState<TabsType>(Tabs.SYNC);
 
   React.useEffect(() => {
     (ref.current as HTMLDivElement).ownerDocument.body.scrollTop = 0;
@@ -23,7 +25,7 @@ function App() {
     <Box className='roboto-condensed' ref={ref}>
       <ThemeProvider theme={darkTheme}>
         <Header />
-        {/* content */}
+        <ContentSwitcher currentTab={currentTab} />
         <Nav currentTab={currentTab} setCurrentTab={setCurrentTab} />
       </ThemeProvider>
     </Box>

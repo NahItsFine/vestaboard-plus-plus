@@ -2,7 +2,7 @@ import { Paper, BottomNavigation, BottomNavigationAction } from "@mui/material";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SyncIcon from '@mui/icons-material/Sync';
-import { Tabs, TabsType } from "../constants";
+import { TABS, TabsType } from "../constants";
 import { Dispatch, SetStateAction } from "react";
 
 interface NavProps {
@@ -19,9 +19,9 @@ function Nav({ currentTab, setCurrentTab }: NavProps) {
           setCurrentTab(newValue);
         }}
       >
-        <BottomNavigationAction label='Sync' value={Tabs.SYNC} icon={<SyncIcon />} />
-        <BottomNavigationAction label='Async' value={Tabs.ASYNC} icon={<AccessTimeIcon />} />
-        <BottomNavigationAction label='Settings' value={Tabs.SETTINGS} icon={<SettingsIcon />} />
+        <BottomNavigationAction label='Sync' value={TABS.SYNC} icon={<SyncIcon />} />
+        <BottomNavigationAction label='Async' value={TABS.ASYNC} icon={<AccessTimeIcon />} />
+        <BottomNavigationAction label='Settings' value={TABS.SETTINGS} icon={<SettingsIcon />} />
       </BottomNavigation>
     </Paper>
   )

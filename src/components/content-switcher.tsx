@@ -1,41 +1,39 @@
 import { Box, Typography } from "@mui/material";
-import { Tabs, TabsType } from "../constants";
+import { TABS, TabsType } from "../constants";
+import { SyncChannels } from "./channels/sync/channels";
+import Channel from "./channels/channel";
+import { AsyncChannels } from "./channels/async/channels";
+import { SettingsChannels } from "./channels/settings/channels";
 
 interface ContentSwitcherProps {
   currentTab: TabsType;
 }
 
 function ContentSwitcher({ currentTab }: ContentSwitcherProps) {
-  const getCurrentTab = (currentTab: TabsType) => {
+  const getCurrentTabChannels = (currentTab: TabsType) => {
     switch (currentTab) {
-      case Tabs.SYNC:
-        return (
-          <Box>
-            <Typography variant='h4'>Sync</Typography>
-          </Box>
-        );
-      case Tabs.ASYNC:
-        return (
-          <Box>
-            <Typography variant='h4'>Async</Typography>
-          </Box>
-        );
-      case Tabs.SETTINGS:
-        return (
-          <Box>
-            <Typography variant='h4'>Settings</Typography>
-          </Box>
-        );
+      case TABS.SYNC:
+        return SyncChannels.map((channel, i) => {
+          return <Channel channel={channel} key={i} />;
+        });
+      case TABS.ASYNC:
+        return AsyncChannels.map((channel, i) => {
+          return <Channel channel={channel} key={i} />;
+        });
+      case TABS.SETTINGS:
+        return SettingsChannels.map((channel, i) => {
+          return <Channel channel={channel} key={i} />;
+        });
       default:
         return (
           <Box>
-            <Typography variant='h4'>Sync</Typography>
+            <Typography variant='h4'>???</Typography>
           </Box>
         );
     }
   }
 
-  return getCurrentTab(currentTab);
+  return getCurrentTabChannels(currentTab);
 };
 
 export default ContentSwitcher;

@@ -2,7 +2,9 @@
 import { Component } from "react";
 import InputBox from "./input-box";
 import { Box } from "@mui/material";
+import { toUpper } from "lodash";
 
+const lowerCaseRegEx = /^[a-z]/;
 const supportedRegEx = /^[A-Z0-9!@#$%&()-+=;:'",./°]+$/;
 const numRows = 6;
 const numCols = 22;
@@ -62,6 +64,7 @@ class CharArray extends Component<CharArrayProps> {
       charModules[col] = (
         <InputBox
           type='text'
+          id={getRowColId(rowNum, col)}
           name={getRowColId(rowNum, col)}
           key={getRowColId(rowNum, col)}
           handleKeyDown={this.handleKeyDown}
@@ -100,6 +103,10 @@ class CharArray extends Component<CharArrayProps> {
   }
 
   handleChange({ target }: React.ChangeEvent<HTMLInputElement>) {
+    if (target.value.match(lowerCaseRegEx)) {
+      target.value = toUpper(target.value);
+    }
+
     const { row, col } = getRowColFromId(target.name);
     if (target.value.match(supportedRegEx)) {
       this.state.charArray[row][col] = target.value;
@@ -157,8 +164,25 @@ class CharArray extends Component<CharArrayProps> {
     }
   }
 
+  // Syncs the component output array to the local state charArray
   setModuleOutput() {
     this.props.handleOutputArray(this.state.charArray);
+  }
+
+  // Visually clear each input box
+  resetCharArray() {
+    this.state.charArray = Array.from({ length: numRows }, () => Array(numCols).fill(''));
+    this.setModuleOutput();
+
+    // To clear every input box
+    for (let row = 0; row < numRows; row++) {
+      for (let col = 0; col < numCols; col++) {
+        const inputBoxElement = document.getElementById(getRowColId(row, col));
+        if (inputBoxElement) {
+          (inputBoxElement as HTMLInputElement).value = '';
+        }
+      }
+    }
   }
 }
 

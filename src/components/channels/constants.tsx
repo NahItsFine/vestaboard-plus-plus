@@ -64,6 +64,17 @@ interface CharacterMapping {
   note?: string
 }
 
+export const COLOUR_HEXES = {
+  red: '#FF0000',
+  orange: '#FFA500',
+  yellow: '#FFFF00',
+  green: '#00FF00',
+  blue: '#0000FF',
+  violet: '#7F00FF',
+  white: '#FFFFFF',
+  black: '#000000',
+}
+
 const CHARACTER_MAP: CharacterMapping[] = [
   {
     key: 'BLANK',
@@ -354,57 +365,57 @@ const CHARACTER_MAP: CharacterMapping[] = [
   {
     key: 'RED',
     label: '',
-    hex: '#FF0000',
+    hex: COLOUR_HEXES.red,
     code: 63,
   },
   {
     key: 'ORANGE',
     label: '',
-    hex: '#FFA500',
+    hex: COLOUR_HEXES.orange,
     code: 64,
   },
   {
     key: 'YELLOW',
     label: '',
-    hex: '#FFFF00',
+    hex: COLOUR_HEXES.yellow,
     code: 65,
   },
   {
     key: 'GREEN',
     label: '',
-    hex: '#00FF00',
+    hex: COLOUR_HEXES.green,
     code: 66,
   },
   {
     key: 'BLUE',
     label: '',
-    hex: '#0000FF',
+    hex: COLOUR_HEXES.blue,
     code: 67,
   },
   {
     key: 'VIOLET',
     label: '',
-    hex: '#7F00FF',
+    hex: COLOUR_HEXES.violet,
     code: 68,
   },
   {
     key: 'WHITE',
     label: '',
-    hex: '#FFFFFF',
+    hex: COLOUR_HEXES.white,
     code: 69,
     note: 'For the local API this is black on a white Vestaboard',
   },
   {
     key: 'BLACK',
     label: '',
-    hex: '#000000',
+    hex: COLOUR_HEXES.black,
     code: 70,
     note: 'For the local API this is white on a white Vestaboard',
   },
   {
     key: 'FILLED',
     label: '',
-    hex: '#000000', // Equals black bc using a black Vestaboard
+    hex: COLOUR_HEXES.black,
     code: 71,
     note: 'White on black Vestaboard / black on white Vestaboard, not available for the local API',
   },

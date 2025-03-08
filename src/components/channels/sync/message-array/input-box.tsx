@@ -2,6 +2,7 @@
 import styled from 'styled-components'
 
 interface InputBoxProps {
+  id: any,
   type: any,
   handleKeyDown: any,
   handleChange: any,
@@ -26,10 +27,11 @@ const Input = styled.input`
   border-bottom:0.5px solid grey;
 `
 
-const InputBox = ({ type, handleKeyDown, handleChange, handleFocus, handleOnPaste, handleOnClick, name, inputRef, inputProps }: InputBoxProps) => {
+const InputBox = ({ id, type, handleKeyDown, handleChange, handleFocus, handleOnPaste, handleOnClick, name, inputRef, inputProps }: InputBoxProps) => {
   return (
     <Input
       {...inputProps}
+      id={id}
       type={type}
       onKeyDown={handleKeyDown}
       onChange={handleChange}

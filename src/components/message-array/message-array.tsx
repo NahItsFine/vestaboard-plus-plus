@@ -4,10 +4,11 @@ import RICIBs from 'react-individual-character-input-boxes';
 function MessageArray() {
   const supportedRegEx = /^[A-Z0-9!@#$%&()-+=;:'",./°]+$/i;
   const boxStyle = {
-    'maxWidth': '25px',
+    'width': '10px',
+    'height': '20px',
+    'font-size': '15px',
     'backgroundColor': '#000000',
     'margin': '1px',
-    'font-size': '20px'
   }
   // const numRows = 6;
   const numCols = 22;

@@ -60,7 +60,6 @@ interface CharacterMapping {
   key: string,
   label: string,
   code: number,
-  hex?: string,
   note?: string
 }
 
@@ -364,73 +363,63 @@ const CHARACTER_MAP: CharacterMapping[] = [
   },
   {
     key: 'RED',
-    label: '',
-    hex: COLOUR_HEXES.red,
+    label: COLOUR_HEXES.red,
     code: 63,
   },
   {
     key: 'ORANGE',
-    label: '',
-    hex: COLOUR_HEXES.orange,
+    label: COLOUR_HEXES.orange,
     code: 64,
   },
   {
     key: 'YELLOW',
-    label: '',
-    hex: COLOUR_HEXES.yellow,
+    label: COLOUR_HEXES.yellow,
     code: 65,
   },
   {
     key: 'GREEN',
-    label: '',
-    hex: COLOUR_HEXES.green,
+    label: COLOUR_HEXES.green,
     code: 66,
   },
   {
     key: 'BLUE',
-    label: '',
-    hex: COLOUR_HEXES.blue,
+    label: COLOUR_HEXES.blue,
     code: 67,
   },
   {
     key: 'VIOLET',
-    label: '',
-    hex: COLOUR_HEXES.violet,
+    label: COLOUR_HEXES.violet,
     code: 68,
   },
   {
     key: 'WHITE',
-    label: '',
-    hex: COLOUR_HEXES.white,
+    label: COLOUR_HEXES.white,
     code: 69,
     note: 'For the local API this is black on a white Vestaboard',
   },
   {
     key: 'BLACK',
-    label: '',
-    hex: COLOUR_HEXES.black,
+    label: COLOUR_HEXES.black,
     code: 70,
     note: 'For the local API this is white on a white Vestaboard',
   },
-  {
-    key: 'FILLED',
-    label: '',
-    hex: COLOUR_HEXES.black,
-    code: 71,
-    note: 'White on black Vestaboard / black on white Vestaboard, not available for the local API',
-  },
+  // {
+  //   key: 'FILLED',
+  //   label: COLOUR_HEXES.black,
+  //   code: 71,
+  //   note: 'White on black Vestaboard / black on white Vestaboard, not available for the local API',
+  // },
 ];
 
-export const CHARACTER_MAP_CODE_TO_KEY_LABEL_HEX = CHARACTER_MAP.reduce((accum, value) => ({
+export const CHARACTER_MAP_CODE_TO_KEY_LABEL = CHARACTER_MAP.reduce((accum, value) => ({
   ...accum,
   [value.code]: {
     key: value.key,
     label: value.label,
-    hex: value.hex,
   }
 }), {});
 
-export const CHARACTER_MAP_LABEL_HEX_TO_CODE = CHARACTER_MAP.reduce((accum, value) => ({
+export const CHARACTER_MAP_LABEL_TO_CODE = CHARACTER_MAP.reduce((accum, value) => ({
   ...accum,
-  [`${value.label}-${value.hex}`]: value.code
+  [value.label]: value.code
 }), {});

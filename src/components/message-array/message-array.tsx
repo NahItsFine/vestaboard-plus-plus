@@ -16,6 +16,14 @@ function MessageArray() {
     console.log('ROW #0 output: ', output)
   }
 
+  // DOES NOT ACCOUNT FOR BLANKS
+  // CANNOT COLOR
+  // FLEX HORIZONTAL SCROLL
+
+  // CHAR MODULE
+  // ROW MODULE = CHAR MODULE * 22
+  // MESSAGE ARRAY = ROW MODULE * 6
+
   return (
     <Box>
       <RICIBs

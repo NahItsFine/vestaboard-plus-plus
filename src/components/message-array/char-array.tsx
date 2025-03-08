@@ -81,7 +81,7 @@ class CharArray extends Component<CharArrayProps> {
   }
 
     return (
-      <Box sx={{ 'mb': '1' }}>
+      <Box key={rowNum} sx={{ 'mb': '1' }}>
         {charModules}
       </Box>
     );

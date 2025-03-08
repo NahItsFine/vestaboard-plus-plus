@@ -27,7 +27,7 @@ function App() {
   
 
   return (
-    <Box className='roboto-condensed' ref={ref}>
+    <Box className='roboto-condensed' ref={ref} sx={{ display: 'flex', flexDirection: 'column', mt: 3 }}>
       <ThemeProvider theme={darkTheme}>
         <Header />
         <ContentSwitcher currentTab={currentTab} />

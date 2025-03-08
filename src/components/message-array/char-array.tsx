@@ -14,10 +14,10 @@ const getCellBorderStyles = (row: number, col: number) => {
   const borderLeftStyle = (col === numCols/2) ? borderStyle : '';
   const borderRightStyle = (col === numCols/2 - 1) ? borderStyle : '';
   return {
-    'border-top': borderTopStyle,
-    'border-bottom': borderBottomStyle,
-    'border-left': borderLeftStyle,
-    'border-right': borderRightStyle,
+    'borderTop': borderTopStyle,
+    'borderBottom': borderBottomStyle,
+    'borderLeft': borderLeftStyle,
+    'borderRight': borderRightStyle,
   };
 }
 
@@ -93,7 +93,7 @@ class CharArray extends Component<CharArrayProps> {
       charArray.push(this.renderRow(row));
     }
     return (
-      <Box sx={{ 'overflow-x': 'scroll'}}>
+      <Box sx={{ 'overflowX': 'scroll'}}>
         {charArray}
       </Box>
     );

@@ -2,9 +2,10 @@ import { Box, Divider, Button, IconButton, Snackbar, Stack, alpha } from "@mui/m
 import SendIcon from '@mui/icons-material/Send';
 import CircleIcon from '@mui/icons-material/Circle';
 import AbcIcon from '@mui/icons-material/Abc';
+import CircularProgress from '@mui/material/CircularProgress';
 import { isNull } from "lodash";
 import useAppStore from "../../../store";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CharArray from "./message-array/char-array";
 import { Delete } from "@mui/icons-material";
 import { COLOUR_HEXES } from "../constants";
@@ -13,22 +14,27 @@ import { PUSH_MESSAGE_INPUT_MODE, PushMessageInputModeType } from "./constants";
 function ChannelContentPushMessage() {
   const { openChannel } = useAppStore();
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [charArray, setCharArray] = useState<string[][]>([]);
   const charArrayRef = useRef<CharArray>(null);
   const [inputMode, setInputMode] = useState<PushMessageInputModeType>(PUSH_MESSAGE_INPUT_MODE.TEXT);
   const translucentBg = alpha(COLOUR_HEXES.white, 0.3);
 
   const sendMessage = () => {
+    // call api helper, api endpoint
     setIsSnackbarOpen(true);
     console.log('sendMessage: ', JSON.stringify(charArray));
   }
 
-  const closeSnackbar = () => {
-    setIsSnackbarOpen(false);
+  const loadMessage = async () => {
+    // call api helper, api endpoint
+    const result: string[][] = [];
+    console.log('loadMessage: ', JSON.stringify(charArray));
+    return result;
   }
 
-  const handleOutputArray = (output: string[][]) => {
-    setCharArray(output);
+  const closeSnackbar = () => {
+    setIsSnackbarOpen(false);
   }
   
   const handleClearBoard = () => {
@@ -37,16 +43,29 @@ function ChannelContentPushMessage() {
     }
   }
 
+  // Fetch current board state on load
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await loadMessage();
+      setCharArray(result);
+    };
+
+    fetchData();
+    setIsLoading(false);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   if (isNull(openChannel)) {
     return <></>;
   }
 
-  // on click: if state = if color mode, onclick should update color prop and value (not visible)
-  // scaffold api layer with charArray <> codeArray translations (get, post)
+  if (isLoading) {
+    return <CircularProgress />;
+  }
   
   return (
     <Box sx={{ 'width': `${13*40}px` }}>
-      <CharArray ref={charArrayRef} inputMode={inputMode} handleOutputArray={handleOutputArray} />
+      <CharArray ref={charArrayRef} inputMode={inputMode} charArray={charArray} setCharArray={setCharArray} />
 
       <Divider sx={{ mt: 2, mb: 1 }} />
 

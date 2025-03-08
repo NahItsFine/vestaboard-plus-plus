@@ -37,7 +37,8 @@ const getRowColFromId = (id: string) => {
 }
 
 interface CharArrayProps {
-  handleOutputArray: any;
+  charArray: string[][];
+  setCharArray: any;
   inputMode: PushMessageInputModeType;
 }
 
@@ -48,7 +49,7 @@ class CharArray extends Component<CharArrayProps> {
   constructor(props: CharArrayProps) {
     super(props)
     this.state = {
-      charArray: Array.from({ length: numRows }, () => Array(numCols).fill('')),
+      charArray: this.props.charArray.length !== 0 ? this.props.charArray : Array.from({ length: numRows }, () => Array(numCols).fill('')),
     };
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -192,7 +193,7 @@ class CharArray extends Component<CharArrayProps> {
 
   // Syncs the component output array to the local state charArray
   setModuleOutput() {
-    this.props.handleOutputArray(this.state.charArray);
+    this.props.setCharArray(this.state.charArray);
   }
 
   // Visually clear each input box

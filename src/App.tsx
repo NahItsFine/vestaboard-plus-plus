@@ -8,6 +8,7 @@ import Header from './components/header';
 import { TABS, TabsType } from './constants';
 import ContentSwitcher from './components/content-switcher';
 import useAppStore from './store';
+import ChannelContentModal from './components/channels/channel-content-modal';
 
 function App() {
   const ref = React.useRef<HTMLDivElement>(null);
@@ -17,7 +18,7 @@ function App() {
     },
   });
 
-  const { openChannelId } = useAppStore();
+  const { openChannel } = useAppStore();
   const [currentTab, setCurrentTab] = useState<TabsType>(TABS.SYNC);
 
   React.useEffect(() => {
@@ -31,7 +32,7 @@ function App() {
         <Header />
         <ContentSwitcher currentTab={currentTab} />
         <Nav currentTab={currentTab} setCurrentTab={setCurrentTab} />
-        {/* {!isNull(openChannelId) && <p>Open modal: {openChannelId}</p>} */}
+        {!isNull(openChannel) && <ChannelContentModal />}
       </ThemeProvider>
     </Box>
   )

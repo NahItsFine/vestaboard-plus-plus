@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { create } from 'zustand';
-import { ChannelIdEnumType } from './components/channels/constants';
+import { ChannelType } from './components/channels/constants';
 
 type State = {
-  openChannelId: ChannelIdEnumType | null;
-  setOpenChannelId: (channelId: ChannelIdEnumType | null) => void;
+  openChannel: ChannelType | null;
+  setOpenChannel: (channel: ChannelType | null) => void;
 }
 
 const store = (set: any) => ({
-  openChannelId: null,
-  setOpenChannelId: (channelId: ChannelIdEnumType | null) => set({ openChannelId: channelId }),
+  openChannel: null,
+  setOpenChannel: (channel: ChannelType | null) => set({ openChannel: channel }),
 });
 
 const useAppStore = create<State>(store);

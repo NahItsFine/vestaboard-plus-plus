@@ -54,3 +54,372 @@ export interface SettingsChannel extends Channel {
 }
 
 export type ChannelType = SyncPushChannel | SyncModeChannel | AsyncChannel | SettingsChannel;
+
+// Character codes
+interface CharacterMapping {
+  key: string,
+  label: string,
+  code: number,
+  hex?: string,
+  note?: string
+}
+
+const CHARACTER_MAP: CharacterMapping[] = [
+  {
+    key: 'BLANK',
+    label: '',
+    code: 0,
+    note: 'black on black Vestaboard, white on white Vestaboard'
+  },
+  {
+    key: 'A',
+    label: 'A',
+    code: 1,
+  },
+  {
+    key: 'B',
+    label: 'B',
+    code: 2,
+  },
+  {
+    key: 'C',
+    label: 'C',
+    code: 3,
+  },
+  {
+    key: 'D',
+    label: 'D',
+    code: 4,
+  },
+  {
+    key: 'E',
+    label: 'E',
+    code: 5,
+  },
+  {
+    key: 'F',
+    label: 'F',
+    code: 6,
+  },
+  {
+    key: 'G',
+    label: 'G',
+    code: 7,
+  },
+  {
+    key: 'H',
+    label: 'H',
+    code: 8,
+  },
+  {
+    key: 'I',
+    label: 'I',
+    code: 9,
+  },
+  {
+    key: 'J',
+    label: 'J',
+    code: 10,
+  },
+  {
+    key: 'K',
+    label: 'K',
+    code: 11,
+  },
+  {
+    key: 'L',
+    label: 'L',
+    code: 12,
+  },
+  {
+    key: 'M',
+    label: 'M',
+    code: 13,
+  },
+  {
+    key: 'N',
+    label: 'N',
+    code: 14,
+  },
+  {
+    key: 'O',
+    label: 'O',
+    code: 15,
+  },
+  {
+    key: 'P',
+    label: 'P',
+    code: 16,
+  },
+  {
+    key: 'Q',
+    label: 'Q',
+    code: 17,
+  },
+  {
+    key: 'R',
+    label: 'R',
+    code: 18,
+  },
+  {
+    key: 'S',
+    label: 'S',
+    code: 19,
+  },
+  {
+    key: 'T',
+    label: 'T',
+    code: 20,
+  },
+  {
+    key: 'U',
+    label: 'U',
+    code: 21,
+  },
+  {
+    key: 'V',
+    label: 'V',
+    code: 22,
+  },
+  {
+    key: 'W',
+    label: 'W',
+    code: 23,
+  },
+  {
+    key: 'X',
+    label: 'X',
+    code: 24,
+  },
+  {
+    key: 'Y',
+    label: 'Y',
+    code: 25,
+  },
+  {
+    key: 'Z',
+    label: 'Z',
+    code: 26,
+  },
+  {
+    key: '1',
+    label: '1',
+    code: 27,
+  },
+  {
+    key: '2',
+    label: '2',
+    code: 28,
+  },
+  {
+    key: '3',
+    label: '3',
+    code: 29,
+  },
+  {
+    key: '4',
+    label: '4',
+    code: 30,
+  },
+  {
+    key: '5',
+    label: '5',
+    code: 31,
+  },
+  {
+    key: '6',
+    label: '6',
+    code: 32,
+  },
+  {
+    key: '7',
+    label: '7',
+    code: 33,
+  },
+  {
+    key: '8',
+    label: '8',
+    code: 34,
+  },
+  {
+    key: '9',
+    label: '9',
+    code: 35,
+  },
+  {
+    key: '0',
+    label: '0',
+    code: 36,
+  },
+  {
+    key: 'EXCLAMATION',
+    label: '!',
+    code: 37,
+  },
+  {
+    key: 'AT',
+    label: '@',
+    code: 38,
+  },
+  {
+    key: 'POUND',
+    label: '#',
+    code: 39,
+  },
+  {
+    key: 'DOLLAR',
+    label: '$',
+    code: 40,
+  },
+  {
+    key: 'LEFT_PARENTHESIS',
+    label: '(',
+    code: 41,
+  },
+  {
+    key: 'RIGHT_PARENTHESIS',
+    label: ')',
+    code: 42,
+  },
+  {
+    key: 'HYPHEN',
+    label: '-',
+    code: 44,
+  },
+  {
+    key: 'PLUS',
+    label: '+',
+    code: 46,
+  },
+  {
+    key: 'AMPERSAND',
+    label: '&',
+    code: 47,
+  },
+  {
+    key: 'EQUAL',
+    label: '=',
+    code: 48,
+  },
+  {
+    key: 'SEMICOLON',
+    label: ';',
+    code: 49,
+  },
+  {
+    key: 'COLON',
+    label: ':',
+    code: 50,
+  },
+  {
+    key: 'SINGLE_QUOTE',
+    label: `'`,
+    code: 52,
+  },
+  {
+    key: 'DOUBLE_QUOTE',
+    label: '"',
+    code: 53,
+  },
+  {
+    key: 'PERCENT',
+    label: '%',
+    code: 54,
+  },
+  {
+    key: 'COMMA',
+    label: ',',
+    code: 55,
+  },
+  {
+    key: 'PERIOD',
+    label: '.',
+    code: 56,
+  },
+  {
+    key: 'SLASH',
+    label: '/',
+    code: 59,
+  },
+  {
+    key: 'QUESTION',
+    label: '?',
+    code: 60,
+  },
+  {
+    key: 'DEGREE',
+    label: '°',
+    code: 62,
+  },
+  {
+    key: 'RED',
+    label: '',
+    hex: '#FF0000',
+    code: 63,
+  },
+  {
+    key: 'ORANGE',
+    label: '',
+    hex: '#FFA500',
+    code: 64,
+  },
+  {
+    key: 'YELLOW',
+    label: '',
+    hex: '#FFFF00',
+    code: 65,
+  },
+  {
+    key: 'GREEN',
+    label: '',
+    hex: '#00FF00',
+    code: 66,
+  },
+  {
+    key: 'BLUE',
+    label: '',
+    hex: '#0000FF',
+    code: 67,
+  },
+  {
+    key: 'VIOLET',
+    label: '',
+    hex: '#7F00FF',
+    code: 68,
+  },
+  {
+    key: 'WHITE',
+    label: '',
+    hex: '#FFFFFF',
+    code: 69,
+    note: 'For the local API this is black on a white Vestaboard',
+  },
+  {
+    key: 'BLACK',
+    label: '',
+    hex: '#000000',
+    code: 70,
+    note: 'For the local API this is white on a white Vestaboard',
+  },
+  {
+    key: 'FILLED',
+    label: '',
+    hex: '#000000', // Equals black bc using a black Vestaboard
+    code: 71,
+    note: 'White on black Vestaboard / black on white Vestaboard, not available for the local API',
+  },
+];
+
+export const CHARACTER_MAP_CODE_TO_KEY_LABEL_HEX = CHARACTER_MAP.reduce((accum, value) => ({
+  ...accum,
+  [value.code]: {
+    key: value.key,
+    label: value.label,
+    hex: value.hex,
+  }
+}), {});
+
+export const CHARACTER_MAP_LABEL_HEX_TO_CODE = CHARACTER_MAP.reduce((accum, value) => ({
+  ...accum,
+  [`${value.label}-${value.hex}`]: value.code
+}), {});

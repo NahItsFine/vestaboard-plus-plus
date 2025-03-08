@@ -74,7 +74,7 @@ export const COLOUR_HEXES = {
   black: '#000000',
 }
 
-const CHARACTER_MAP: CharacterMapping[] = [
+export const CHARACTER_MAP: CharacterMapping[] = [
   {
     key: 'BLANK',
     label: '',
@@ -411,15 +411,12 @@ const CHARACTER_MAP: CharacterMapping[] = [
   // },
 ];
 
-export const CHARACTER_MAP_CODE_TO_KEY_LABEL = CHARACTER_MAP.reduce((accum, value) => ({
-  ...accum,
-  [value.code]: {
-    key: value.key,
-    label: value.label,
-  }
-}), {});
+export const CHARACTER_MAP_CODE_TO_LABEL: Map<number, string> = CHARACTER_MAP.reduce((accum, value) => {
+  accum.set(value.code, value.label);
+  return accum;
+}, new Map<number, string>());
 
-export const CHARACTER_MAP_LABEL_TO_CODE = CHARACTER_MAP.reduce((accum, value) => ({
-  ...accum,
-  [value.label]: value.code
-}), {});
+export const CHARACTER_MAP_LABEL_TO_CODE: Map<string, number> = CHARACTER_MAP.reduce((accum, value) => {
+  accum.set(value.label, value.code);
+  return accum;
+}, new Map<string, number>());

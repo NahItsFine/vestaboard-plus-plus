@@ -10,6 +10,7 @@ import CharArray from "./message-array/char-array";
 import { Delete } from "@mui/icons-material";
 import { COLOUR_HEXES } from "../constants";
 import { PUSH_MESSAGE_INPUT_MODE, PushMessageInputModeType } from "./constants";
+import { charArrayToCodeArray, codeArrayToCharArray } from "../../../api/helpers";
 
 function ChannelContentPushMessage() {
   const { openChannel } = useAppStore();
@@ -21,16 +22,17 @@ function ChannelContentPushMessage() {
   const translucentBg = alpha(COLOUR_HEXES.white, 0.3);
 
   const sendMessage = () => {
-    // call api helper, api endpoint
+    const codeArray: number[][] = charArrayToCodeArray(charArray);
+    // TODO: call endpoint with codeArray
     setIsSnackbarOpen(true);
-    console.log('sendMessage: ', JSON.stringify(charArray));
+    console.log('sendMessage: ', JSON.stringify(codeArray));
   }
 
   const loadMessage = async () => {
-    // call api helper, api endpoint
-    const result: string[][] = [];
+    const codeArray: number[][] = []; // TODO: call endpoint to get codeArray
+    const charArray = codeArrayToCharArray(codeArray);
     console.log('loadMessage: ', JSON.stringify(charArray));
-    return result;
+    return charArray;
   }
 
   const closeSnackbar = () => {

@@ -168,6 +168,8 @@ class CharArray extends Component<CharArrayProps> {
   handleOnClick({ target }: { target: HTMLInputElement }) {
     if (this.props.inputMode === PUSH_MESSAGE_INPUT_MODE.TEXT) {
       this.resetInputBox(target);
+      const { row, col } = getRowColFromId(target.name);
+      this.state.charArray[row][col] = '';
     } else {
       this.handleColourModeClick(target, this.props.inputMode);
     }

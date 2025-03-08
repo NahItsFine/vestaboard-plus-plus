@@ -6,6 +6,20 @@ import { Box } from "@mui/material";
 const supportedRegEx = /^[A-Z0-9!@#$%&()-+=;:'",./°]+$/;
 const numRows = 6;
 const numCols = 22;
+const borderStyle = '1px solid white';
+
+const getCellBorderStyles = (row: number, col: number) => {
+  const borderTopStyle = (row === numRows/2) ? borderStyle : '';
+  const borderBottomStyle = (row === numRows/2 - 1) ? borderStyle : '';
+  const borderLeftStyle = (col === numCols/2) ? borderStyle : '';
+  const borderRightStyle = (col === numCols/2 - 1) ? borderStyle : '';
+  return {
+    'border-top': borderTopStyle,
+    'border-bottom': borderBottomStyle,
+    'border-left': borderLeftStyle,
+    'border-right': borderRightStyle,
+  };
+}
 
 const getRowColId = (row: number, col: number) => {
   return `${row}-${col}`;
@@ -55,7 +69,9 @@ class CharArray extends Component<CharArrayProps> {
           handleChange={this.handleChange}
           handleOnPaste={this.handleOnPaste}
           handleOnClick={this.handleOnClick}
-          inputProps={{}}
+          inputProps={{
+            style: getCellBorderStyles(rowNum, col),
+          }}
           inputRef={(el: HTMLInputElement) => {
             if (!el) return
             this.inputElements[el.name] = el

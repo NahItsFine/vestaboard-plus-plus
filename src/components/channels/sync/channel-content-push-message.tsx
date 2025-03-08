@@ -1,4 +1,4 @@
-import { Box, Divider, Button, IconButton, Snackbar } from "@mui/material";
+import { Box, Divider, Button, IconButton, Snackbar, Stack } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import CircleIcon from '@mui/icons-material/Circle';
 import AbcIcon from '@mui/icons-material/Abc';
@@ -7,6 +7,7 @@ import { isNull } from "lodash";
 import useAppStore from "../../../store";
 import { useState } from "react";
 import CharArray from "../../message-array/char-array";
+import { Delete } from "@mui/icons-material";
 
 function ChannelContentPushMessage() {
   const { openChannel } = useAppStore();
@@ -15,7 +16,7 @@ function ChannelContentPushMessage() {
 
   const sendMessage = () => {
     setIsSnackbarOpen(true);
-    console.log('charArray: ', JSON.stringify(charArray));
+    console.log('sendMessage: ', JSON.stringify(charArray));
   }
 
   const closeSnackbar = () => {
@@ -30,6 +31,7 @@ function ChannelContentPushMessage() {
     return <></>;
   }
 
+  // clear button
   // on click: if state = if color mode, onclick should update color prop and value (not visible)
   
   return (
@@ -88,17 +90,33 @@ function ChannelContentPushMessage() {
       </Box>
 
       <Divider sx={{ mt: 1, mb: 2 }} />
+      
 
-      <Box display="flex" justifyContent="center">
+      <Stack
+        spacing={5}
+        direction="row"
+        useFlexGap
+        sx={{ flexWrap: 'wrap' }}
+        justifyContent="center"
+      >
+        <Button
+          aria-label="clear"
+          endIcon={<Delete />}
+          onClick={() => sendMessage()}
+          variant="outlined"
+        >
+          Clear
+        </Button>
+
         <Button
           aria-label="send"
           endIcon={<SendIcon />}
           onClick={() => sendMessage()}
-          variant="outlined"
+          variant="contained"
         >
           Send
         </Button>
-      </Box>
+      </Stack>
       
       <Snackbar
         open={isSnackbarOpen}

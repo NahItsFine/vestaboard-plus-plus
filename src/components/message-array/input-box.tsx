@@ -23,6 +23,7 @@ const Input = styled.input`
   text-align: center;
   font-size: 15px;
   font-weight: 500; 
+  border-bottom:0.5px solid grey;
 `
 
 const InputBox = ({ type, handleKeyDown, handleChange, handleFocus, handleOnPaste, handleOnClick, name, inputRef, inputProps }: InputBoxProps) => {

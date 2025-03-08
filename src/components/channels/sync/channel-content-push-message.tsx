@@ -1,37 +1,103 @@
-import { Box, Divider, IconButton, Snackbar } from "@mui/material";
+import { Box, Divider, Button, IconButton, Snackbar } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
+import CircleIcon from '@mui/icons-material/Circle';
+import AbcIcon from '@mui/icons-material/Abc';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { isNull } from "lodash";
 import useAppStore from "../../../store";
 import { useState } from "react";
-import MessageArray from "../../message-array/message-array";
+import CharArray from "../../message-array/char-array";
 
 function ChannelContentPushMessage() {
-  const { openChannel, setOpenChannel } = useAppStore();
+  const { openChannel } = useAppStore();
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
+  const [charArray, setCharArray] = useState<string[][]>([]);
 
   const sendMessage = () => {
     setIsSnackbarOpen(true);
+    console.log('charArray: ', JSON.stringify(charArray));
   }
 
   const closeSnackbar = () => {
     setIsSnackbarOpen(false);
-    setOpenChannel(null);
+  }
+
+  const handleOutputArray = (output: string[][]) => {
+    setCharArray(output);
   }
 
   if (isNull(openChannel)) {
     return <></>;
   }
+
+  // on click: if state = if color mode, onclick should update color prop and value (not visible)
   
   return (
-    <>
-      <MessageArray />
+    <Box sx={{ 'width': `${13*40}px` }}>
+      <CharArray handleOutputArray={handleOutputArray} />
 
-      <Divider sx={{ mt: 3, mb: 1 }} />
+      <Divider sx={{ mt: 2, mb: 1 }} />
 
-      <Box display="flex" justifyContent="flex-end">
-        <IconButton aria-label="send" onClick={() => sendMessage()}>
-          <SendIcon />
+      <Box display="flex" justifyContent="center" sx={{ my: 0, mx: 1 }}>
+        <IconButton
+          onClick={() => {}}
+        >
+          <AbcIcon />
         </IconButton>
+        <IconButton
+          color="success"
+          onClick={() => {}}
+        >
+          <CircleIcon />
+        </IconButton>
+        <IconButton
+          color="warning"
+          onClick={() => {}}
+        >
+          <CircleIcon />
+        </IconButton>
+        <IconButton
+          color="info"
+          onClick={() => {}}
+        >
+          <CircleIcon />
+        </IconButton>
+        <IconButton
+          color="success"
+          onClick={() => {}}
+        >
+          <CircleIcon />
+        </IconButton>
+        <IconButton
+          color="warning"
+          onClick={() => {}}
+        >
+          <CircleIcon />
+        </IconButton>
+        <IconButton
+          color="info"
+          onClick={() => {}}
+        >
+          <CircleIcon />
+        </IconButton>
+        <IconButton
+          onClick={() => {}}
+        >
+          <CancelIcon />
+        </IconButton>
+      </Box>
+
+      <Divider sx={{ mt: 1, mb: 2 }} />
+
+      <Box display="flex" justifyContent="center">
+        <Button
+          aria-label="send"
+          endIcon={<SendIcon />}
+          onClick={() => sendMessage()}
+          variant="outlined"
+        >
+          Send
+        </Button>
       </Box>
       
       <Snackbar
@@ -40,7 +106,7 @@ function ChannelContentPushMessage() {
         onClose={() => closeSnackbar()}
         message='Message pushed'
       />
-    </>
+    </Box>
   );
 };
 

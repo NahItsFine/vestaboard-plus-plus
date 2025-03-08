@@ -12,3 +12,6 @@ export const PUSH_MESSAGE_INPUT_MODE = Object.freeze({
   BLACK: COLOUR_HEXES.black,
 });
 export type PushMessageInputModeType = typeof PUSH_MESSAGE_INPUT_MODE[keyof typeof PUSH_MESSAGE_INPUT_MODE];
+
+// Used as placeholder values to denote a color is in an input box, not a single char
+export type PushMessageInputColorValueType = typeof PUSH_MESSAGE_INPUT_MODE[keyof typeof PUSH_MESSAGE_INPUT_MODE];

@@ -46,7 +46,7 @@ function ChannelContentPushMessage() {
   
   return (
     <Box sx={{ 'width': `${13*40}px` }}>
-      <CharArray ref={charArrayRef} handleOutputArray={handleOutputArray} />
+      <CharArray ref={charArrayRef} inputMode={inputMode} handleOutputArray={handleOutputArray} />
 
       <Divider sx={{ mt: 2, mb: 1 }} />
 

@@ -3,6 +3,7 @@ import { Component } from "react";
 import InputBox from "./input-box";
 import { Box } from "@mui/material";
 import { toUpper } from "lodash";
+import { PUSH_MESSAGE_INPUT_MODE, PushMessageInputColorValueType, PushMessageInputModeType } from "../constants";
 
 const lowerCaseRegEx = /^[a-z]/;
 const supportedRegEx = /^[A-Z0-9!@#$%&()-+=;:'",./°]+$/;
@@ -37,6 +38,7 @@ const getRowColFromId = (id: string) => {
 
 interface CharArrayProps {
   handleOutputArray: any;
+  inputMode: PushMessageInputModeType;
 }
 
 class CharArray extends Component<CharArrayProps> {
@@ -103,6 +105,14 @@ class CharArray extends Component<CharArrayProps> {
   }
 
   handleChange({ target }: React.ChangeEvent<HTMLInputElement>) {
+    if (this.props.inputMode === PUSH_MESSAGE_INPUT_MODE.TEXT) {
+      this.handleTextModeChange(target as HTMLInputElement);
+    } else {
+      this.handleColourModeChange(target as HTMLInputElement);
+    }
+  }
+
+  handleTextModeChange(target: HTMLInputElement) {
     if (target.value.match(lowerCaseRegEx)) {
       target.value = toUpper(target.value);
     }
@@ -117,10 +127,16 @@ class CharArray extends Component<CharArrayProps> {
     }
   }
 
+  // Do nothing on change for colors, only update on click
+  handleColourModeChange(target: HTMLInputElement) {
+    const { row, col } = getRowColFromId(target.name);
+    target.value = this.state.charArray[row][col];
+  }
+
   handleKeyDown({ target, key }: { target: HTMLInputElement, key: string }) {
     if (key === 'Backspace') {
       if (target.value === '' && target.previousElementSibling !== null) {
-        (target.previousElementSibling as HTMLInputElement).value = '';
+        this.resetInputBox(target.previousElementSibling as HTMLInputElement);
         const { row, col } = getRowColFromId(target.name);
         this.state.charArray[row][col-1] = '';
         this.focusPrevChar(target);
@@ -148,8 +164,18 @@ class CharArray extends Component<CharArrayProps> {
     // not supported
   }
 
-  handleOnClick() {
-    // support soon
+  handleOnClick({ target }: { target: HTMLInputElement }) {
+    if (this.props.inputMode === PUSH_MESSAGE_INPUT_MODE.TEXT) {
+      this.resetInputBox(target);
+    } else {
+      this.handleColourModeClick(target, this.props.inputMode);
+    }
+  }
+
+  handleColourModeClick(target: HTMLInputElement, colorHex: PushMessageInputColorValueType) {
+    const { row, col } = getRowColFromId(target.name);
+    this.state.charArray[row][col] = colorHex;
+    this.setInputBoxColor(target, colorHex);
   }
 
   focusPrevChar(target: HTMLInputElement) {
@@ -179,10 +205,24 @@ class CharArray extends Component<CharArrayProps> {
       for (let col = 0; col < numCols; col++) {
         const inputBoxElement = document.getElementById(getRowColId(row, col));
         if (inputBoxElement) {
-          (inputBoxElement as HTMLInputElement).value = '';
+          this.resetInputBox(inputBoxElement as HTMLInputElement);
         }
       }
     }
+  }
+
+  // Reset all values and stylings done on an input box
+  resetInputBox(target: HTMLInputElement) {
+    target.value = '';
+    target.style.background = '';
+    target.style.color = '';
+  }
+
+  // Set colors for input box
+  setInputBoxColor(target: HTMLInputElement, colourHex: PushMessageInputColorValueType) {
+    target.value = colourHex;
+    target.style.background = colourHex;
+    target.style.color = colourHex;
   }
 }
 

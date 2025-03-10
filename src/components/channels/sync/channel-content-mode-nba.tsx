@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Switch } from "@mui/material";
 import { useEffect, useState } from "react";
 import { charArrayToCodeArray } from "../../../api/helpers";
 import { HTTP_METHOD, performHttpRequest } from "../../../api/api";
@@ -6,7 +6,6 @@ import { endpointWorldTimeApi } from "../../../api/config";
 import { NUM_COLS, NUM_ROWS } from "../../../constants";
 import { COLOUR_HEXES } from "../constants";
 import { DIGIT_TO_FILLED_ROW_COLS_SET } from "../clock-constants";
-import FancySwitch from "../../misc/fancy-switch";
 
 interface rawData {
   datetime: string,
@@ -19,7 +18,7 @@ interface formattedData {
   minuteB: number
 }
 
-function ChannelContentModeClock() {
+function ChannelContentModeNba() {
   const pushCadenceSeconds = 20;
 
   const colonStartCol = 10;
@@ -35,6 +34,7 @@ function ChannelContentModeClock() {
   const minuteBStartCol = 18;
 
   const [isOn, setIsOn] = useState<boolean>(false);
+  const getStatusText = isOn ? 'In progress ...' : 'Not started';
 
   const getData = async (): Promise<rawData> => {
     const data: rawData = await performHttpRequest(
@@ -145,9 +145,12 @@ function ChannelContentModeClock() {
 
   return (
     <Box sx={{ display: 'flex', m: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <FancySwitch onChange={(event) => setIsOn(event.target.checked)}/>
+      <Box sx={{ width: '25%' }}>
+        <Switch onChange={(event) => setIsOn(event.target.checked)}/>
+      </Box>
+      <Box sx={{ width: '75%' }}>{getStatusText}</Box>
     </Box>
   );
 }
 
-export default ChannelContentModeClock;
+export default ChannelContentModeNba;

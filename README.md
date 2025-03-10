@@ -47,4 +47,6 @@ Vestaboard+, but with another +
 - Getting Started
   - Update dependencies: `npm install`
   - Run locally: `npm run dev`
-  - Run within the server: `npm run dev --host`
+  - Run within the local server: `npm run dev --host`
+- What's next?
+  - Sync channel for Spotify, NBA Scoreboard

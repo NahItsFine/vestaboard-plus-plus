@@ -10,7 +10,7 @@ export const SyncChannels: (SyncChannel)[] = [
   },
   {
     id: CHANNEL_ID_ENUM.SYNC_MODE_CLOCK,
-    name: 'Clock (WIP)',
+    name: 'Clock',
     type: CHANNEL_TYPE_ENUM.SYNC_MODE,
     icon: 'src\\assets\\clock.png',
     getSubheader: () => 'America/Toronto',

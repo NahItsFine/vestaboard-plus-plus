@@ -1,21 +1,34 @@
-import { Box, Switch } from "@mui/material";
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { charArrayToCodeArray } from "../../../api/helpers";
 import { HTTP_METHOD, performHttpRequest } from "../../../api/api";
-import { endpointWorldTimeApi } from "../../../api/config";
+import { espnNbaScoresApi } from "../../../api/config";
 import { NUM_COLS, NUM_ROWS } from "../../../constants";
 import { COLOUR_HEXES } from "../constants";
-import { DIGIT_TO_FILLED_ROW_COLS_SET } from "../clock-constants";
+import FancySwitch from "../../misc/fancy-switch";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const GAME_STATUS = Object.freeze({
+  SCHEDULED: 'STATUS_SCHEDULED',
+  // TODO: TBD
+});
+export type GameStatusType = typeof GAME_STATUS[keyof typeof GAME_STATUS];
+
+interface rawGame {
+  name: string,
+  status: GameStatusType,
+  period: number,
+  isCompleted: boolean,
+  score: string, // TODO: TBD
+}
 
 interface rawData {
-  datetime: string,
+  day: string,
+  games: rawGame[]
 }
 
 interface formattedData {
-  hourA: number,
-  hourB: number,
-  minuteA: number,
-  minuteB: number
+  tbd: string
 }
 
 function ChannelContentModeNba() {
@@ -34,88 +47,49 @@ function ChannelContentModeNba() {
   const minuteBStartCol = 18;
 
   const [isOn, setIsOn] = useState<boolean>(false);
-  const getStatusText = isOn ? 'In progress ...' : 'Not started';
 
   const getData = async (): Promise<rawData> => {
-    const data: rawData = await performHttpRequest(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data: any = await performHttpRequest(
       HTTP_METHOD.GET,
-      endpointWorldTimeApi
+      espnNbaScoresApi
     );
+
+    const rawGames: rawGame[] = [];
+    for (const event of data.events) {
+      rawGames.push({
+        name: event.shortName,
+        period: event.status.period,
+        status: event.status.type.name as GameStatusType,
+        isCompleted: event.status.type.completed,
+        score: '', // TODO: TBD
+      });
+    }
+
     return {
-      datetime: data.datetime,
+      day: data.day.date,
+      games: rawGames,
     };
   }
 
   const formatData = (rawData: rawData): formattedData => {
-    const date = new Date(rawData.datetime);
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
+    // const date = new Date(rawData.datetime);
+    // const hours = date.getHours();
+    // const minutes = date.getMinutes();
 
-    return {
-      hourA: Math.floor(hours / 10),
-      hourB: hours % 10,
-      minuteA: Math.floor(minutes / 10),
-      minuteB: minutes % 10,
-    };
-  }
-
-  const shouldFillChar = (digit: number, row: number, col: number): boolean => {
-    return DIGIT_TO_FILLED_ROW_COLS_SET[digit as keyof typeof DIGIT_TO_FILLED_ROW_COLS_SET].has(`${row}${col}`);
+    // return {
+    //   hourA: Math.floor(hours / 10),
+    //   hourB: hours % 10,
+    //   minuteA: Math.floor(minutes / 10),
+    //   minuteB: minutes % 10,
+    // };
   }
 
   const formattedDataToCharArray = (formattedData: formattedData): string[][] => {
     const charArray = Array.from({ length: NUM_ROWS }, () => Array(NUM_COLS).fill(''));
     
-    // Digit Hour A
-    let rowOffset = 0;
-    let colOffset = hourAStartCol;
-    for (let row = rowOffset; row < rowOffset + digitHeight; row++) {
-      for (let col = colOffset; col < colOffset + digitWidth; col++) {
-        charArray[row][col] = shouldFillChar(formattedData.hourA, row - rowOffset, col - colOffset) ? COLOUR_HEXES.white : '';
-      }
-    }
-
-    // Digit Hour B
-    rowOffset = 0;
-    colOffset = hourBStartCol;
-    for (let row = rowOffset; row < rowOffset + digitHeight; row++) {
-      for (let col = colOffset; col < colOffset + digitWidth; col++) {
-        charArray[row][col] = shouldFillChar(formattedData.hourB, row - rowOffset, col - colOffset) ? COLOUR_HEXES.white : '';
-      }
-    }
-
-    // Colon Top
-    for (let row = 0; row < rowOffset + digitHeight; row++) {
-      for (let col = colonStartCol; col < (colonStartCol + colonWidth); col++) {
-        charArray[row][col] = COLOUR_HEXES.white;
-      }
-    }
-
-    // Colon Bottom
-    for (let row = 0; row < (colonBottomStartRow + colonHeight); row++) {
-      for (let col = colOffset; col < colOffset + digitWidth; col++) {
-        charArray[row][col] = COLOUR_HEXES.white;
-      }
-    }
-    
-    // Digit Minute A
-    rowOffset = 0;
-    colOffset = minuteAStartCol;
-    for (let row = 0; row < digitHeight; row++) {
-      for (let col = colOffset; col < colOffset + digitWidth; col++) {
-        charArray[row][col] = shouldFillChar(formattedData.minuteA, row - rowOffset, col - colOffset) ? COLOUR_HEXES.white : '';
-      }
-    }
-
-
-    // Digit Minute B
-    rowOffset = 0;
-    colOffset = minuteBStartCol;
-    for (let row = rowOffset; row < rowOffset + digitHeight; row++) {
-      for (let col = colOffset; col < colOffset + digitWidth; col++) {
-        charArray[row][col] = shouldFillChar(formattedData.minuteB, row - rowOffset, col - colOffset) ? COLOUR_HEXES.white : '';
-      }
-    }
+    // Header
+    // Scores
 
     return charArray;
   }
@@ -145,10 +119,7 @@ function ChannelContentModeNba() {
 
   return (
     <Box sx={{ display: 'flex', m: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Box sx={{ width: '25%' }}>
-        <Switch onChange={(event) => setIsOn(event.target.checked)}/>
-      </Box>
-      <Box sx={{ width: '75%' }}>{getStatusText}</Box>
+      <FancySwitch onChange={(event) => setIsOn(event.target.checked)}/>
     </Box>
   );
 }

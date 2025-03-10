@@ -3,7 +3,7 @@ import { CHANNEL_TYPE_ENUM, AsyncChannel, CHANNEL_ID_ENUM } from "../constants";
 export const AsyncChannels: (AsyncChannel)[] = [
   {
     id: CHANNEL_ID_ENUM.ASYNC_NEWS,
-    name: '(WIP) Headlines',
+    name: 'Headlines (WIP)',
     type: CHANNEL_TYPE_ENUM.ASYNC,
     icon: 'src\\assets\\news.png',
     getSubheader: function () { return `[${this.isOn ? 'ON' : 'OFF'}] Show the latest headlines`; },

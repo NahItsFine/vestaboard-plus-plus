@@ -9,7 +9,9 @@ export type ChannelTypeEnumType = typeof CHANNEL_TYPE_ENUM[keyof typeof CHANNEL_
 
 export const CHANNEL_ID_ENUM = Object.freeze({
   SYNC_PUSH_MESSAGE: 'sync_push_message',
+  SYNC_MODE_CLOCK: 'sync_mode_clock',
   SYNC_MODE_SPOTIFY: 'sync_mode_spotify',
+  SYNC_MODE_NBA: 'sync_mode_nba',
   ASYNC_NEWS: 'async_news',
   SETTINGS_QUIET_HOURS: 'settings_quiet_hours',
 });
@@ -24,15 +26,8 @@ interface Channel {
   getSubheader(): string;
 }
 
-export interface SyncPushChannel extends Channel {
-  type: typeof CHANNEL_TYPE_ENUM.SYNC_PUSH;
-  push?(message: string): void;
-}
-
-export interface SyncModeChannel extends Channel {
-  type: typeof CHANNEL_TYPE_ENUM.SYNC_MODE;
-  isOn: boolean;
-  toggleOn(): void;
+export interface SyncChannel extends Channel {
+  type: typeof CHANNEL_TYPE_ENUM.SYNC_PUSH | typeof CHANNEL_TYPE_ENUM.SYNC_MODE;
 }
 
 export interface AsyncChannel extends Channel {
@@ -53,7 +48,7 @@ export interface SettingsChannel extends Channel {
   setSetting(key: string, value: unknown): void;
 }
 
-export type ChannelType = SyncPushChannel | SyncModeChannel | AsyncChannel | SettingsChannel;
+export type ChannelType = SyncChannel | AsyncChannel | SettingsChannel;
 
 // Character codes
 interface CharacterMapping {

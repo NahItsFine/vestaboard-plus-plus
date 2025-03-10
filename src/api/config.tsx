@@ -1,0 +1,1 @@
+export const endpointWorldTimeApi = 'http://worldtimeapi.org/api/timezone/America/Toronto';

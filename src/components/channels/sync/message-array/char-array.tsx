@@ -4,18 +4,17 @@ import InputBox from "./input-box";
 import { Box } from "@mui/material";
 import { toUpper } from "lodash";
 import { PUSH_MESSAGE_INPUT_MODE, PushMessageInputColorValueType, PushMessageInputModeType } from "../constants";
+import { NUM_ROWS, NUM_COLS } from "../../../../constants";
 
 const lowerCaseRegEx = /^[a-z]/;
 const supportedRegEx = /^[A-Z0-9!@#$%&()-+=;:'",./°]+$/;
-const numRows = 6;
-const numCols = 22;
 const borderStyle = '1px solid white';
 
 const getCellBorderStyles = (row: number, col: number) => {
-  const borderTopStyle = (row === numRows/2) ? borderStyle : '';
-  const borderBottomStyle = (row === numRows/2 - 1) ? borderStyle : '';
-  const borderLeftStyle = (col === numCols/2) ? borderStyle : '';
-  const borderRightStyle = (col === numCols/2 - 1) ? borderStyle : '';
+  const borderTopStyle = (row === NUM_ROWS/2) ? borderStyle : '';
+  const borderBottomStyle = (row === NUM_ROWS/2 - 1) ? borderStyle : '';
+  const borderLeftStyle = (col === NUM_COLS/2) ? borderStyle : '';
+  const borderRightStyle = (col === NUM_COLS/2 - 1) ? borderStyle : '';
   return {
     'borderTop': borderTopStyle,
     'borderBottom': borderBottomStyle,
@@ -49,7 +48,7 @@ class CharArray extends Component<CharArrayProps> {
   constructor(props: CharArrayProps) {
     super(props)
     this.state = {
-      charArray: this.props.charArray.length !== 0 ? this.props.charArray : Array.from({ length: numRows }, () => Array(numCols).fill('')),
+      charArray: this.props.charArray.length !== 0 ? this.props.charArray : Array.from({ length: NUM_ROWS }, () => Array(NUM_COLS).fill('')),
     };
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -61,9 +60,9 @@ class CharArray extends Component<CharArrayProps> {
   }
 
   renderRow(rowNum: number) {
-    const charModules: any[] = Array(numCols).fill(undefined);
+    const charModules: any[] = Array(NUM_COLS).fill(undefined);
 
-    for (let col = 0; col < numCols; col++) {
+    for (let col = 0; col < NUM_COLS; col++) {
       charModules[col] = (
         <InputBox
           type='text'
@@ -95,7 +94,7 @@ class CharArray extends Component<CharArrayProps> {
   
   render() {
     const charArray = [];
-    for (let row = 0; row < numRows; row++) {
+    for (let row = 0; row < NUM_ROWS; row++) {
       charArray.push(this.renderRow(row));
     }
     return (
@@ -200,12 +199,12 @@ class CharArray extends Component<CharArrayProps> {
 
   // Visually clear each input box
   resetCharArray() {
-    this.state.charArray = Array.from({ length: numRows }, () => Array(numCols).fill(''));
+    this.state.charArray = Array.from({ length: NUM_ROWS }, () => Array(NUM_COLS).fill(''));
     this.setModuleOutput();
 
     // To clear every input box
-    for (let row = 0; row < numRows; row++) {
-      for (let col = 0; col < numCols; col++) {
+    for (let row = 0; row < NUM_ROWS; row++) {
+      for (let col = 0; col < NUM_COLS; col++) {
         const inputBoxElement = document.getElementById(getRowColId(row, col));
         if (inputBoxElement) {
           this.resetInputBox(inputBoxElement as HTMLInputElement);

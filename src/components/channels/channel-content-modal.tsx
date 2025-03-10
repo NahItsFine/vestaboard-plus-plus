@@ -4,6 +4,7 @@ import { CHANNEL_ID_ENUM } from "./constants";
 import useAppStore from "../../store";
 import { isNull } from "lodash";
 import ChannelContentPushMessage from "./sync/channel-content-push-message";
+import ChannelContentModeClock from "./sync/channel-content-mode-clock";
 
 function ChannelContentModal() {
   const { openChannel, setOpenChannel } = useAppStore();
@@ -39,8 +40,16 @@ function ChannelContentModal() {
         </Toolbar>
       </AppBar>
       <Box sx={{ p: 2 }}>
-        {openChannel.id === CHANNEL_ID_ENUM.SYNC_PUSH_MESSAGE && <ChannelContentPushMessage />}
-        {openChannel.id !== CHANNEL_ID_ENUM.SYNC_PUSH_MESSAGE && <>Content for channel ID: {openChannel.id}</>}
+        {(() => {
+          switch (openChannel.id) {
+            case CHANNEL_ID_ENUM.SYNC_PUSH_MESSAGE:
+              return <ChannelContentPushMessage />;
+            case CHANNEL_ID_ENUM.SYNC_MODE_CLOCK:
+              return <ChannelContentModeClock />;
+            default:
+              return <>Placeholder content for channel ID: {openChannel.id}</>;
+          }
+        })()}
       </Box>
    </Dialog>
   )

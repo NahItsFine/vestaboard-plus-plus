@@ -1,21 +1,32 @@
-import { SyncPushChannel, SyncModeChannel, CHANNEL_TYPE_ENUM, CHANNEL_ID_ENUM } from "../constants";
+import { SyncChannel, CHANNEL_TYPE_ENUM, CHANNEL_ID_ENUM } from "../constants";
 
-export const SyncChannels: (SyncPushChannel | SyncModeChannel)[] = [
+export const SyncChannels: (SyncChannel)[] = [
   {
     id: CHANNEL_ID_ENUM.SYNC_PUSH_MESSAGE,
-    name: '(WIP) Push Message',
+    name: 'Push Message',
     type: CHANNEL_TYPE_ENUM.SYNC_PUSH,
     icon: 'src\\assets\\message.png',
     getSubheader: () => 'Send a message to the Vestaboard',
-    push: (message: string) => console.log(`PUSH MESSAGE: ${message}`),
+  },
+  {
+    id: CHANNEL_ID_ENUM.SYNC_MODE_CLOCK,
+    name: 'Clock (WIP)',
+    type: CHANNEL_TYPE_ENUM.SYNC_MODE,
+    icon: 'src\\assets\\clock.png',
+    getSubheader: () => 'America/Toronto',
   },
   {
     id: CHANNEL_ID_ENUM.SYNC_MODE_SPOTIFY,
-    name: '(WIP) Spotify Mode',
+    name: 'Spotify (WIP)',
     type: CHANNEL_TYPE_ENUM.SYNC_MODE,
     icon: 'src\\assets\\spotify.png',
-    getSubheader: function () { return `[${this.isOn ? 'ON' : 'OFF'}] Show what's playing on Spotify`; },
-    isOn: false,
-    toggleOn: () => (isOn: boolean) => !isOn,
+    getSubheader: () => "Show what's playing on Spotify",
+  },
+  {
+    id: CHANNEL_ID_ENUM.SYNC_MODE_NBA,
+    name: 'NBA Scoreboard (WIP)',
+    type: CHANNEL_TYPE_ENUM.SYNC_MODE,
+    icon: 'src\\assets\\nba.png',
+    getSubheader: () => "Today's NBA games",
   },
 ];

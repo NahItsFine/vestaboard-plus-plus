@@ -5,7 +5,6 @@ import useAppStore from "../../store";
 import { isNull } from "lodash";
 import ChannelContentPushMessage from "./sync/channel-content-push-message";
 import ChannelContentModeClock from "./sync/channel-content-mode-clock";
-import ChannelContentModeNba from "./sync/channel-content-mode-nba";
 
 function ChannelContentModal() {
   const { openChannel, setOpenChannel } = useAppStore();
@@ -47,8 +46,6 @@ function ChannelContentModal() {
               return <ChannelContentPushMessage />;
             case CHANNEL_ID_ENUM.SYNC_MODE_CLOCK:
               return <ChannelContentModeClock />;
-            case CHANNEL_ID_ENUM.SYNC_MODE_NBA:
-              return <ChannelContentModeNba />;
             default:
               return <>Placeholder content for channel ID: {openChannel.id}</>;
           }

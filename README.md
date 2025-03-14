@@ -13,11 +13,6 @@ Vestaboard+, but with another +
 ### Tech stack
 - React + TypeScript + Vite (for frontend)
 - Backend repo: [dynamic-display-backend](https://github.com/NahItsFine/dynamic-display-backend)
-- Django (for backend server)
-  - Celery Beat (for async job scheduling)
-- SQLite (for simple DB)
-- Celery (for async workers)
-- Redis (for async job broker)
 
 ### Features
 - settings

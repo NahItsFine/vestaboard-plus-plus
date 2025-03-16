@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Snackbar } from "@mui/material";
 import { useEffect, useState } from "react";
 import { charArrayToCodeArray } from "../../../api/helpers";
 import { HTTP_METHOD, performHttpRequest, readWritePost } from "../../../api/api";
@@ -35,6 +35,7 @@ function ChannelContentModeClock() {
   const minuteBStartCol = 18;
 
   const [isOn, setIsOn] = useState<boolean>(false);
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
 
   const getData = async (): Promise<rawData> => {
     const data: rawData = await performHttpRequest(
@@ -51,11 +52,16 @@ function ChannelContentModeClock() {
     const hours = date.getHours();
     const minutes = date.getMinutes();
 
+    const hourA = Math.floor(hours / 10)
+    const hourB = hours % 10
+    const minuteA = Math.floor(minutes / 10)
+    const minuteB = minutes % 10
+
     return {
-      hourA: Math.floor(hours / 10),
-      hourB: hours % 10,
-      minuteA: Math.floor(minutes / 10),
-      minuteB: minutes % 10,
+      hourA: hourA,
+      hourB: hourB,
+      minuteA: minuteA,
+      minuteB: minuteB,
     };
   }
 
@@ -85,15 +91,17 @@ function ChannelContentModeClock() {
     }
 
     // Colon Top
-    for (let row = 0; row < rowOffset + digitHeight; row++) {
+    rowOffset = 0;
+    for (let row = rowOffset; row < rowOffset + colonHeight; row++) {
       for (let col = colonStartCol; col < (colonStartCol + colonWidth); col++) {
         charArray[row][col] = COLOUR_HEXES.white;
       }
     }
 
     // Colon Bottom
-    for (let row = 0; row < (colonBottomStartRow + colonHeight); row++) {
-      for (let col = colOffset; col < colOffset + digitWidth; col++) {
+    rowOffset = colonBottomStartRow;
+    for (let row = rowOffset; row < (rowOffset + colonHeight); row++) {
+      for (let col = colonStartCol; col < (colonStartCol + colonWidth); col++) {
         charArray[row][col] = COLOUR_HEXES.white;
       }
     }
@@ -123,6 +131,11 @@ function ChannelContentModeClock() {
   const sendMessage = async (charArray: string[][]) => {
     const codeArray: number[][] = charArrayToCodeArray(charArray);
     await readWritePost(codeArray);
+    setIsSnackbarOpen(true);
+  }
+
+  const closeSnackbar = () => {
+    setIsSnackbarOpen(false);
   }
 
   useEffect(() => {
@@ -143,9 +156,16 @@ function ChannelContentModeClock() {
   }, [isOn]);
 
   return (
-    <Box sx={{ display: 'flex', m: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <FancySwitch onChange={(event) => setIsOn(event.target.checked)}/>
-    </Box>
+    <>
+      <Box sx={{ display: 'flex', m: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <FancySwitch onChange={(event) => setIsOn(event.target.checked)} />
+      </Box>
+      <Snackbar
+        open={isSnackbarOpen}
+        autoHideDuration={3000}
+        onClose={() => closeSnackbar()}
+        message={'Pushed current time'} />
+    </>
   );
 }
 

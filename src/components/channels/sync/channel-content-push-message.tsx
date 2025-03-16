@@ -11,6 +11,7 @@ import { Delete } from "@mui/icons-material";
 import { COLOUR_HEXES } from "../constants";
 import { PUSH_MESSAGE_INPUT_MODE, PushMessageInputModeType } from "./constants";
 import { charArrayToCodeArray, codeArrayToCharArray } from "../../../api/helpers";
+import { readWriteGet, readWritePost } from "../../../api/api";
 
 function ChannelContentPushMessage() {
   const { openChannel } = useAppStore();
@@ -21,17 +22,17 @@ function ChannelContentPushMessage() {
   const [inputMode, setInputMode] = useState<PushMessageInputModeType>(PUSH_MESSAGE_INPUT_MODE.TEXT);
   const translucentBg = alpha(COLOUR_HEXES.white, 0.3);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     const codeArray: number[][] = charArrayToCodeArray(charArray);
-    // TODO: call endpoint with codeArray
-    setIsSnackbarOpen(true);
-    console.log('sendMessage: ', JSON.stringify(codeArray));
+    const response = await readWritePost(codeArray);
+    if (response) {
+      setIsSnackbarOpen(true);
+    }
   }
 
   const loadMessage = async () => {
-    const codeArray: number[][] = []; // TODO: call endpoint to get codeArray
+    const codeArray: number[][] = await readWriteGet();
     const charArray = codeArrayToCharArray(codeArray);
-    console.log('loadMessage: ', JSON.stringify(charArray));
     return charArray;
   }
 

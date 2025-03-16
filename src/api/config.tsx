@@ -1,3 +1,10 @@
-export const endpointWorldTimeApi = 'http://worldtimeapi.org/api/timezone/America/Toronto';
+// Vestaboard Cloud
+export const READ_WRITE_ENDPOINT = 'https://rw.vestaboard.com/';
+export const READ_WRITE_HEADER = 'X-Vestaboard-Read-Write-Key'
+export const READ_WRITE_KEY = '';
 
-export const espnNbaScoresApi = 'http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
+// Vestaboard Local
+// TBD
+
+// Third party
+export const WORLD_TIME_ENDPOINT = 'http://worldtimeapi.org/api/timezone/America/Toronto';

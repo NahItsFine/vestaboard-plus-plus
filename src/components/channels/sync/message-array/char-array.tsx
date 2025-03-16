@@ -35,15 +35,35 @@ const getRowColFromId = (id: string) => {
   }
 }
 
+// Reset all values and stylings done on an input box
+const resetInputBox = (target: HTMLInputElement) => {
+  target.value = '';
+  target.style.background = '';
+  target.style.color = '';
+}
+
+// Set colors for input box
+const setInputBoxColor = (target: HTMLInputElement, colourHex: PushMessageInputColorValueType) => {
+  target.value = colourHex;
+  target.style.background = colourHex;
+  target.style.color = colourHex;
+}
+const getInputBoxColorAsStyle = (colourHex: PushMessageInputColorValueType) => {
+  return {
+    'background': colourHex,
+    'color': colourHex,
+  }
+}
+
 interface CharArrayProps {
   charArray: string[][];
-  setCharArray: any;
+  setCharArray: (charArray: string[][]) => void;
   inputMode: PushMessageInputModeType;
 }
 
 class CharArray extends Component<CharArrayProps> {
   state: any;
-  inputElements: { [key: string]: HTMLInputElement };
+  inputElements: { [key: string]: HTMLInputElement };  
 
   constructor(props: CharArrayProps) {
     super(props)
@@ -59,23 +79,41 @@ class CharArray extends Component<CharArrayProps> {
     this.inputElements = {};
   }
 
+  componentDidUpdate(prevProps: CharArrayProps) {
+    if (prevProps.charArray !== this.props.charArray) {
+      this.setState({ charArray: this.props.charArray });
+    }
+  }
+
   renderRow(rowNum: number) {
     const charModules: any[] = Array(NUM_COLS).fill(undefined);
 
     for (let col = 0; col < NUM_COLS; col++) {
+      let style = getCellBorderStyles(rowNum, col);
+      // If starting value is a color, set the styles accordingly
+      const startingState = this.state.charArray[rowNum][col];
+      const startingStateArray = Array.from(startingState);
+      if(startingStateArray[0] === '#' && startingStateArray.length > 1) {
+        style = {
+          ...style,
+          ...getInputBoxColorAsStyle(startingState as PushMessageInputColorValueType)
+        };
+      }
+
       charModules[col] = (
         <InputBox
           type='text'
           id={getRowColId(rowNum, col)}
           name={getRowColId(rowNum, col)}
           key={getRowColId(rowNum, col)}
+          value={startingState}
           handleKeyDown={this.handleKeyDown}
           handleFocus={this.handleFocus}
           handleChange={this.handleChange}
           handleOnPaste={this.handleOnPaste}
           handleOnClick={this.handleOnClick}
           inputProps={{
-            style: getCellBorderStyles(rowNum, col),
+            style: style,
           }}
           inputRef={(el: HTMLInputElement) => {
             if (!el) return
@@ -136,7 +174,7 @@ class CharArray extends Component<CharArrayProps> {
   handleKeyDown({ target, key }: { target: HTMLInputElement, key: string }) {
     if (key === 'Backspace') {
       if (target.value === '' && target.previousElementSibling !== null) {
-        this.resetInputBox(target.previousElementSibling as HTMLInputElement);
+        resetInputBox(target.previousElementSibling as HTMLInputElement);
         const { row, col } = getRowColFromId(target.name);
         this.state.charArray[row][col-1] = '';
         this.focusPrevChar(target);
@@ -166,7 +204,7 @@ class CharArray extends Component<CharArrayProps> {
 
   handleOnClick({ target }: { target: HTMLInputElement }) {
     if (this.props.inputMode === PUSH_MESSAGE_INPUT_MODE.TEXT) {
-      this.resetInputBox(target);
+      resetInputBox(target);
       const { row, col } = getRowColFromId(target.name);
       this.state.charArray[row][col] = '';
     } else {
@@ -177,7 +215,7 @@ class CharArray extends Component<CharArrayProps> {
   handleColourModeClick(target: HTMLInputElement, colorHex: PushMessageInputColorValueType) {
     const { row, col } = getRowColFromId(target.name);
     this.state.charArray[row][col] = colorHex;
-    this.setInputBoxColor(target, colorHex);
+    setInputBoxColor(target, colorHex);
   }
 
   focusPrevChar(target: HTMLInputElement) {
@@ -207,25 +245,13 @@ class CharArray extends Component<CharArrayProps> {
       for (let col = 0; col < NUM_COLS; col++) {
         const inputBoxElement = document.getElementById(getRowColId(row, col));
         if (inputBoxElement) {
-          this.resetInputBox(inputBoxElement as HTMLInputElement);
+          resetInputBox(inputBoxElement as HTMLInputElement);
         }
       }
     }
   }
 
-  // Reset all values and stylings done on an input box
-  resetInputBox(target: HTMLInputElement) {
-    target.value = '';
-    target.style.background = '';
-    target.style.color = '';
-  }
-
-  // Set colors for input box
-  setInputBoxColor(target: HTMLInputElement, colourHex: PushMessageInputColorValueType) {
-    target.value = colourHex;
-    target.style.background = colourHex;
-    target.style.color = colourHex;
-  }
+  
 }
 
 export default CharArray;

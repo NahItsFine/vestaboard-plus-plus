@@ -1,4 +1,5 @@
 import { CHARACTER_MAP, CHARACTER_MAP_CODE_TO_LABEL, CHARACTER_MAP_LABEL_TO_CODE } from "../components/channels/constants";
+import { NUM_COLS, NUM_ROWS } from "../constants";
 
 const fallbackCode = CHARACTER_MAP[0].code; // Blank
 const fallbackLabel = CHARACTER_MAP[0].label; // Blank
@@ -16,7 +17,7 @@ export const charArrayToCodeArray = (charArray: string[][]): number[][] => {
 } 
 
 export const codeArrayToCharArray = (codeArray: number[][]): string[][] => {
-  const charArray: string[][] = Array.from({ length: codeArray.length }, () => Array(codeArray[0].length).fill(fallbackLabel));
+  const charArray: string[][] = Array.from({ length: NUM_ROWS }, () => Array(NUM_COLS).fill(fallbackLabel));
 
   for (let row = 0; row < codeArray.length; row++) {
     for (let col = 0; col < codeArray[0].length; col++) {

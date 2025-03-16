@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { charArrayToCodeArray } from "../../../api/helpers";
-import { HTTP_METHOD, performHttpRequest } from "../../../api/api";
-import { endpointWorldTimeApi } from "../../../api/config";
+import { HTTP_METHOD, performHttpRequest, readWritePost } from "../../../api/api";
+import { WORLD_TIME_ENDPOINT } from "../../../api/config";
 import { NUM_COLS, NUM_ROWS } from "../../../constants";
 import { COLOUR_HEXES } from "../constants";
 import { DIGIT_TO_FILLED_ROW_COLS_SET } from "../clock-constants";
@@ -39,7 +39,7 @@ function ChannelContentModeClock() {
   const getData = async (): Promise<rawData> => {
     const data: rawData = await performHttpRequest(
       HTTP_METHOD.GET,
-      endpointWorldTimeApi
+      WORLD_TIME_ENDPOINT
     );
     return {
       datetime: data.datetime,
@@ -120,10 +120,9 @@ function ChannelContentModeClock() {
     return charArray;
   }
 
-  const sendMessage = (charArray: string[][]) => {
+  const sendMessage = async (charArray: string[][]) => {
     const codeArray: number[][] = charArrayToCodeArray(charArray);
-    // TODO: call endpoint with codeArray
-    console.log('sendMessage: ', JSON.stringify(codeArray));
+    await readWritePost(codeArray);
   }
 
   useEffect(() => {

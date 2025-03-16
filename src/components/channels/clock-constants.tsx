@@ -64,7 +64,7 @@ const SEVEN_FILLED_ROW_COLS_SET = new Set<string>([
 
 const EIGHT_FILLED_ROW_COLS_SET = new Set<string>([
   '00', '01', '02',
-  '10', '11',
+  '10', '12',
   '20', '21', '22',
   '30', '32',
   '40', '41', '42',

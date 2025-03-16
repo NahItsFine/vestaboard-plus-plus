@@ -20,7 +20,7 @@ interface formattedData {
 }
 
 function ChannelContentModeClock() {
-  const pushCadenceSeconds = 20;
+  const pushCadenceSeconds = 15;
 
   const colonStartCol = 10;
   const colonBottomStartRow = 3;

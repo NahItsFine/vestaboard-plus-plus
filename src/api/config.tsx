@@ -1,7 +1,9 @@
+import { READ_WRITE_KEY_LOCAL } from "./keys";
+
 // Vestaboard Cloud
 export const READ_WRITE_ENDPOINT = 'https://rw.vestaboard.com/';
-export const READ_WRITE_HEADER = 'X-Vestaboard-Read-Write-Key'
-export const READ_WRITE_KEY = '';
+export const READ_WRITE_HEADER = 'X-Vestaboard-Read-Write-Key';
+export const READ_WRITE_KEY = READ_WRITE_KEY_LOCAL;
 
 // Vestaboard Local
 // TBD

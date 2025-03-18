@@ -87,7 +87,7 @@ function ChannelContentModeSpotify() {
     if (!isUndefined(formattedData.album)) {
       rowNum = albumRow;
       const { startCol, endCol } = getStartingEndingColByLength(formattedData.album.length);
-      for (let col = startCol; col < endCol; col++) {
+      for (let col = startCol; col <= endCol; col++) {
         charArray[rowNum][col] = (formattedData.album).charAt(col-startCol).trim().toLocaleUpperCase() || '';
       }
     }
@@ -96,7 +96,7 @@ function ChannelContentModeSpotify() {
     if (!isUndefined(formattedData.song)) {
       rowNum = songRow;
       const { startCol, endCol } = getStartingEndingColByLength(formattedData.song.length);
-      for (let col = startCol; col < endCol; col++) {
+      for (let col = startCol; col <= endCol; col++) {
         charArray[rowNum][col] = (formattedData.song).charAt(col-startCol).trim().toLocaleUpperCase() || '';
       }
     }

@@ -1,5 +1,5 @@
 import { Box, createTheme, ThemeProvider } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import React from 'react';
 import { isNull } from 'lodash';
@@ -21,10 +21,9 @@ function App() {
   const { openChannel } = useAppStore();
   const [currentTab, setCurrentTab] = useState<TabsType>(TABS.SYNC);
 
-  React.useEffect(() => {
+  useEffect(() => {
     (ref.current as HTMLDivElement).ownerDocument.body.scrollTop = 0;
   }, [currentTab]);
-  
 
   return (
     <Box className='roboto-condensed' ref={ref} sx={{ display: 'flex', flexDirection: 'column', mt: 3 }}>

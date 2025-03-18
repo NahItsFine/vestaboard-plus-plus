@@ -1,18 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { READ_WRITE_ENDPOINT, READ_WRITE_HEADER, READ_WRITE_KEY } from './config';
-
-// Models
-export interface VestaboardGetResponse {
-  currentMessage: {
-    layout: string;
-    id: string;
-  }
-}
-export interface VestaboardPostResponse {
-  status: string,
-  id: string,
-  created: number,
-}
+import { READ_WRITE_ENDPOINT, READ_WRITE_HEADER, READ_WRITE_KEY, SPOTIFY_ACCESS_TOKEN_ENDPOINT, SPOTIFY_APP_CLIENT_ID, SPOTIFY_APP_CLIENT_SECRET, SPOTIFY_APP_REFRESH_TOKEN, SPOTIFY_CURRENTLY_PLAYING_ENDPOINT } from './config';
+import base64js from 'base64-js';
 
 // Generic HTTP request
 export const HTTP_METHOD = Object.freeze({
@@ -43,10 +31,19 @@ export const performHttpRequest = async (
   }
 };
 
-// GET message via local be
-// POST message via local be
+// Vestaboard
+export interface VestaboardGetResponse {
+  currentMessage: {
+    layout: string;
+    id: string;
+  }
+}
+export interface VestaboardPostResponse {
+  status: string,
+  id: string,
+  created: number,
+}
 
-// GET message via Vestaboard cloud be
 export const readWriteGet = async () => {
   const response = await fetch(READ_WRITE_ENDPOINT, {
     headers: {
@@ -64,7 +61,7 @@ export const readWriteGet = async () => {
   return JSON.parse(responseObject.currentMessage.layout) || [];
 }
 
-// POST message via Vestaboard cloud be
+
 export const readWritePost = async (codeArray: number[][]) => {
   const response = await fetch(READ_WRITE_ENDPOINT, {
     headers: {
@@ -81,4 +78,45 @@ export const readWritePost = async (codeArray: number[][]) => {
 
   const responseObject = await response.json() as VestaboardPostResponse;
   return responseObject.status === 'ok';
+}
+
+// Spotify
+export type SpotifyNowPlayingRaw = {
+  is_playing: boolean,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  item?: any,
+}
+export type SpotifyNowPlaying = {
+  isPlaying: boolean,
+  artist?: string,
+  album?: string,
+  song?: string,
+}
+
+const getAccessToken = async () => {
+  const basic = base64js.fromByteArray(new TextEncoder().encode(`${SPOTIFY_APP_CLIENT_ID}:${SPOTIFY_APP_CLIENT_SECRET}`));
+  const response = await fetch(SPOTIFY_ACCESS_TOKEN_ENDPOINT, {
+    method: "POST",
+    headers: {
+        Authorization: `Basic ${basic}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+        grant_type: "refresh_token",
+        refresh_token: SPOTIFY_APP_REFRESH_TOKEN,
+    }).toString(),
+  });
+
+  return response.json();
+};
+
+export const getNowPlaying = async (): Promise<SpotifyNowPlayingRaw> => {
+  const { access_token } = await getAccessToken();
+  const result = fetch(SPOTIFY_CURRENTLY_PLAYING_ENDPOINT, {
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+  });
+  
+  return (await result).json();
 }

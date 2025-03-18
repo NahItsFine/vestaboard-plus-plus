@@ -15,4 +15,11 @@ export const SyncChannels: (SyncChannel)[] = [
     icon: 'src\\assets\\clock.png',
     getSubheader: () => 'America/Toronto',
   },
+  {
+    id: CHANNEL_ID_ENUM.SYNC_MODE_SPOTIFY,
+    name: 'Spotify',
+    type: CHANNEL_TYPE_ENUM.SYNC_MODE,
+    icon: 'src\\assets\\spotify.png',
+    getSubheader: () => 'Now Playing',
+  },
 ];

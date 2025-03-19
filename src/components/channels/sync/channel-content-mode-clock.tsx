@@ -1,16 +1,17 @@
 import { Box, Snackbar } from "@mui/material";
 import { useEffect, useState } from "react";
 import { charArrayToCodeArray } from "../../../api/helpers";
-import { HTTP_METHOD, performHttpRequest, readWritePost } from "../../../api/api";
-import { WORLD_TIME_ENDPOINT } from "../../../api/config";
+// import { HTTP_METHOD, performHttpRequest, readWritePost } from "../../../api/api";
+// import { WORLD_TIME_ENDPOINT } from "../../../api/config";
+import { readWritePost } from "../../../api/api";
 import { NUM_COLS, NUM_ROWS } from "../../../constants";
 import { COLOUR_HEXES } from "../constants";
 import { DIGIT_TO_FILLED_ROW_COLS_SET } from "../clock-constants";
 import FancySwitch from "../../misc/fancy-switch";
 
-interface rawData {
-  datetime: string,
-}
+// interface rawData {
+//   datetime: string,
+// }
 
 interface formattedData {
   hourA: number,
@@ -37,18 +38,20 @@ function ChannelContentModeClock() {
   const [isOn, setIsOn] = useState<boolean>(false);
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
 
-  const getData = async (): Promise<rawData> => {
-    const data: rawData = await performHttpRequest(
-      HTTP_METHOD.GET,
-      WORLD_TIME_ENDPOINT
-    );
-    return {
-      datetime: data.datetime,
-    };
-  }
+  // const getData = async (): Promise<rawData> => {
+  //   const data: rawData = await performHttpRequest(
+  //     HTTP_METHOD.GET,
+  //     WORLD_TIME_ENDPOINT
+  //   );
+  //   return {
+  //     datetime: data.datetime,
+  //   };
+  // }
 
-  const formatData = (rawData: rawData): formattedData => {
-    const date = new Date(rawData.datetime);
+  // const formatData = (rawData: rawData): formattedData => {
+  const formatData = (): formattedData => {
+    // const date = new Date(rawData.datetime);
+    const date = new Date();
     const hours = date.getHours();
     const minutes = date.getMinutes();
 
@@ -144,8 +147,9 @@ function ChannelContentModeClock() {
     }
 
     const interval = setInterval(async () => {
-      const rawData: rawData = await getData();
-      const formattedData: formattedData = formatData(rawData);
+      // const rawData: rawData = await getData();
+      // const formattedData: formattedData = formatData(rawData);
+      const formattedData: formattedData = formatData();
       const charArray: string[][] = formattedDataToCharArray(formattedData);
       sendMessage(charArray);
     }, pushCadenceSeconds * 1000);

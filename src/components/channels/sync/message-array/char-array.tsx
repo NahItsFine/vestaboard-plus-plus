@@ -7,7 +7,7 @@ import { PUSH_MESSAGE_INPUT_MODE, PushMessageInputColorValueType, PushMessageInp
 import { NUM_ROWS, NUM_COLS } from "../../../../constants";
 
 const lowerCaseRegEx = /^[a-z]/;
-const supportedRegEx = /^[A-Z0-9!@#$%&()-+=;:'",./°]+$/;
+const supportedRegEx = /^[A-Z0-9!@#$%&()\-+=;:'",./°]+$/;
 const borderStyle = '1px solid white';
 
 const getCellBorderStyles = (row: number, col: number) => {

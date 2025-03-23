@@ -15,9 +15,14 @@ interface InputBoxProps {
   inputProps: any,
 }
 
+const getInputBoxWidth = (): string => {
+  const isIOS = navigator.userAgent.includes('Apple');
+  return isIOS ? '4px' : '13px'; 
+};
+
 const Input = styled.input`
   justify-content: space-between;
-  width: 13px;
+  width: ${getInputBoxWidth()};
   height: 20px;
   margin: 1px;
   border-radius: 5px;
@@ -25,8 +30,8 @@ const Input = styled.input`
   text-align: center;
   font-size: 15px;
   font-weight: 500; 
-  border-bottom:0.5px solid grey;
-`
+  border-bottom: 0.5px solid grey;
+`;
 
 const InputBox = ({ id, type, value, handleKeyDown, handleChange, handleFocus, handleOnPaste, handleOnClick, name, inputRef, inputProps }: InputBoxProps) => {
   return (
